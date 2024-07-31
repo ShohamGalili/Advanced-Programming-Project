@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            padding: 1em;
+            background-color: #e3f2fd;
+        }
+        form {
+            margin-bottom: 2em;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+        input[type="file"], input[type="text"], button {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #303f9f;
+        }
+    </style>
+</head>
+<body>
+<form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data" target="middleFrame">
+    <label>Upload Configuration File</label>
+    <input type="file" id="file" name="file" >
+    <input type="submit" value="Deploy">
+</form>
+
+<form action="http://localhost:8080/publish" method="GET" target="rightFrame">
+    <label for="topic">Topic Name:</label>
+    <input type="text" id="topic" name="topic" placeholder="Enter your topic">
+
+    <label for="message">Message:</label>
+    <input type="text" id="message" name="message" placeholder="Enter your message">
+    <button type="submit">Send</button>
+</form>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+        fetch('http://localhost:8080/upload', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                console.log('File uploaded successfully');
+                // Reload the graph iframe
+                document.querySelector('iframe[name="middleFrame"]').src = 'graph.html';
+            } else {
+                console.error('Error uploading file:', response.statusText);
+            }
+        }).catch(error => {
+            console.error('Error uploading file:', error);
+        });
+    });
+</script>
+</body>
+</html>

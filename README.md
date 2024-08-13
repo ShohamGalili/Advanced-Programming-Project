@@ -1,6 +1,5 @@
 # Computational Graph Project
 ## Shoham Galili ID: 208010785
-## Hadas Hanassab ID: 213486764
 
 Welcome to the Computational Graph project repository. This project demonstrates the implementation of a computational graph using a publisher/subscriber architecture in Java. The project includes components for managing agents, configurations, and an HTTP server with servlets for handling various request types.
 
